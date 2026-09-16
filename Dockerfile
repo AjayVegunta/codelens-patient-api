@@ -1,7 +1,6 @@
 # ---- Build Stage ----
 FROM node:22.16-alpine AS build
 
-ARG DATABASE_URL
 # Set working directory
 WORKDIR /app
 
@@ -15,11 +14,8 @@ RUN npm install
 COPY . .
 
 # Migrate database
-RUN DATABASE_URL=${DATABASE_URL} npm run db:migrate
 
 # Seed Database
-RUN DATABASE_URL=${DATABASE_URL} npm run db:seed
-
 # Build the TypeScript code
 RUN npm run build
 
@@ -55,4 +51,4 @@ EXPOSE 3000
 
 
 # Start the application
-CMD ["node", "dist/src/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && node dist/src/server.js"]
