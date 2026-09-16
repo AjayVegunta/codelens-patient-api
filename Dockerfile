@@ -13,6 +13,7 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
+RUN npm run db:gen
 # Migrate database
 
 # Seed Database
