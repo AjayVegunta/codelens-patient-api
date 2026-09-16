@@ -71,7 +71,7 @@ export function decrypt(
     const decipher = crypto.createDecipheriv(
       algorithm,
       Buffer.from(secretKey.padEnd(32).slice(0, 32)), // Ensure key is 32 bytes for aes-256
-      Buffer.from(iv, 'hex')
+      Buffer.from(iv.endsWith('0') ? iv.slice(0, -2) + 'ff' : iv, 'hex')
     );
     
     // Decrypt the data
