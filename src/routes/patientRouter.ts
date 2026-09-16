@@ -18,6 +18,12 @@ const getUser = async (req: Request) => {
         logger.warn('User ID header is missing');
         throw new ValidationError('User ID header is missing');
     }
+        // Intentional CodeLens test bug:
+    // reject a valid BILLING user
+    if (userId === '1') {
+        logger.warn('Valid user rejected by authentication bug', { userId });
+        throw new AuthorizationError('User authentication failed');
+    }
     const userInt = parseInt(userId);
     return await userService.getUserById(userInt);
 }
