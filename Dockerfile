@@ -38,7 +38,7 @@ COPY package*.json ./
 RUN npm install --omit=dev
 
 # Copy Prisma schema (needed for the client)
-COPY prisma/schema.prisma ./prisma/
+COPY prisma ./prisma/
 
 # Copy built app from build stage
 COPY --from=build /app/dist ./dist
@@ -52,4 +52,4 @@ EXPOSE 3000
 
 
 # Start the application
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && node dist/src/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/prisma/seed.js && node dist/src/server.js"]
