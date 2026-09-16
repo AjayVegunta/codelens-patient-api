@@ -1,25 +1,26 @@
 services:
   - type: web
-    name: patient-api
+    name: codelens-patient-api
     runtime: docker
-    repo: https://github.com/render-examples/patient-api
-    plan: starter
+    repo: https://github.com/AjayVegunta/codelens-patient-api
+    plan: free
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: patient_database
+          name: codelens-patient-database
           property: connectionString
-    region: ohio
+    region: singapore
     dockerContext: .
     dockerfilePath: ./Dockerfile
     autoDeployTrigger: commit
+
 databases:
-  - name: patient_database
-    databaseName: patient_database_4ilz
-    user: patient_database_4ilz_user
-    plan: basic-256mb
-    region: ohio
+  - name: codelens-patient-database
+    databaseName: codelens_patient
+    user: codelens_patient_user
+    plan: free
+    region: singapore
     ipAllowList: []
     postgresMajorVersion: "16"
-    diskSizeGB: 15
+
 version: "1"
