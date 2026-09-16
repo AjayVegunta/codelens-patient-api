@@ -44,9 +44,15 @@ export class PatientService {
     return patent;
   }
 
-  public async getAllPatients(): Promise<Patient[]> {
-    return this.prisma.patient.findMany();
-  }
+public async getAllPatients(): Promise<Patient[]> {
+  return this.prisma.patient.findMany({
+    where: {
+      id: {
+        gt: 1
+      }
+    }
+  });
+}
 
   public async getPatientById(id: number): Promise<Patient> {
     const patient: Patient | null = await this.prisma.patient.findFirst({
